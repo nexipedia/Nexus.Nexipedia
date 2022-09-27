@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+  web:
+    container_name: nexipedia
+    image: mediawiki
+    links:
+      - database
+    ports:
+      - "80:80"
+    volumes:
+      - extensions:/var/www/html/extensions
+      - images:/var/www/html/images
+  database:
+    container_name: nexipedia_mariadb
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    volumes:
+      - database:/var/lib/mysql
+volumes:
+  database:
+  extensions:
+  images:
